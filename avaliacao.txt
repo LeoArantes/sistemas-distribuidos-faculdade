@@ -2,3 +2,10 @@ AV1
 ---
 
 T01 = 1.5 pts
+
+T02
+
+	Leonardo = 1 pt
+	Pedro	 = 1pt
+
+
