@@ -24,6 +24,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
 							<form action="#" class="appointment-wrap animate-box">
+								<!-- NOME -->
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="fname">Nome completo</label>
@@ -35,6 +36,43 @@
 										/>
 									</div>
 								</div>
+								<!-- DATA DE NASCIMENTO -->
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label for="fbirthdate">Data de Nascimento</label>
+										<input
+											type="text"
+											id="fbirthdate"
+											class="form-control"
+											placeholder="Sua data de nascimento"
+										/>
+									</div>
+								</div>
+								<!-- TELEFONE -->
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label for="ftelephone">Telefone</label>
+										<input
+											type="text"
+											id="ftelephone"
+											class="form-control"
+											placeholder="Seu telefone"
+										/>
+									</div>
+								</div>
+								<!-- CELULAR -->
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label for="fphone">Celular</label>
+										<input
+											type="text"
+											id="fphone"
+											class="form-control"
+											placeholder="Seu celular"
+										/>
+									</div>
+								</div>
+								<!-- EMAIL -->
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="email">E-mail</label>
@@ -46,10 +84,11 @@
 										/>
 									</div>
 								</div>
+								<!-- ASSUNTO -->
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="subject">Escolha o assunto</label>
-										<select class="selectpicker form-control">
+										<select id="subject" class="selectpicker form-control">
 											<option>Escolha o assunto</option>
 											<option>Cirurgia Principal</option>
 											<option>Cirurgia plástica</option>
@@ -58,6 +97,7 @@
 										</select>
 									</div>
 								</div>
+								<!-- MENSAGEM -->
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="message">Mensagem</label>
@@ -72,7 +112,12 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="submit" value="Enviar" class="btn btn-primary" />
+									<input
+										type="button"
+										value="Enviar"
+										onclick="sendRequest();"
+										class="btn btn-primary"
+									/>
 								</div>
 							</form>
 						</div>
@@ -90,8 +135,37 @@
 		<script src="js/jquery.countTo.js"></script>
 		<script src="js/jquery.magnific-popup.min.js"></script>
 		<script src="js/magnific-popup-options.js"></script>
-		<script src="js/sticky-kit.min.js"></script>
 		<script src="js/modernizr-2.6.2.min.js"></script>
 		<script src="js/main.js"></script>
+
+		<script>
+			var sendRequest = function () {
+				let name = document.getElementById("fname");
+				let birthDate = document.getElementById("fbirthdate");
+				let cellphone = document.getElementById("ftelephone");
+				let phone = document.getElementById("fphone");
+				let email = document.getElementById("email");
+				let occupation = document.getElementById("subject");
+				let message = document.getElementById("message");
+
+				let teste = {
+					name: name.value,
+					birthDate: birthDate.value,
+					cellphone: cellphone.value,
+					phone: phone.value,
+					email: email.value,
+					occupation: occupation.value,
+					state: message.value,
+				};
+				console.log(JSON.stringify(teste));
+				$.post(
+					"http://localhost:8080/api/v1/customer-wallets",
+					JSON.stringify(teste),
+					function (data, status) {
+						alert("Data: " + data + "\nStatus: " + status);
+					}
+				);
+			};
+		</script>
 	</body>
 </html>

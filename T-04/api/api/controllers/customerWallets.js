@@ -8,26 +8,27 @@ module.exports = (app) => {
 	const { customerWallets: customerWalletsMock } = customerWalletsDB;
 
 	const transporter = nodemailer.createTransport({
-		service: "gmail",
+		host: "smtp.mailtrap.io",
+		port: 2525,
 		auth: {
-			user: "sistemasdistribuidosprojeto@gmail.com",
-			pass: "SistemasDist123",
+			user: "37afa63d8a6a29",
+			pass: "c7b44e1806b08f",
 		},
 	});
 
-	var mailOptions = {
-		from: "sistemasdistribuidosprojeto@gmail.com",
-		to: "leobalionis@hotmail.com",
-		subject: "Sending Email using Node.js",
-		text: "That was easy!",
-	};
-
+	
 	controller.listCustomerWallets = (req, res) => res.status(200).json(customerWalletsDB);
-
+	
 	controller.saveCustomerWallets = (req, res) => {
-        console.log("teste");
+		var mailOptions = {
+			from: "sistemasdistribuidosprojeto@gmail.com",
+			to: req.body.email,
+			subject: req.body.occupation,
+			text: req.body.state,
+		};
 
-        transporter.sendMail(mailOptions, function (error, info) {
+		console.log(mailOptions);
+		transporter.sendMail(mailOptions, function (error, info) {
 			if (error) {
 				console.log(error);
 			} else {
@@ -46,6 +47,7 @@ module.exports = (app) => {
 			state: req.body.state,
 		});
 
+		console.log(customerWalletsMock);
 		res.status(201).json(customerWalletsMock);
 	};
 
